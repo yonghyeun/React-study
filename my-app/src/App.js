@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './App.css';
 
 let id = 0;
 
@@ -82,9 +83,13 @@ function FilterdItems({ todo, setTodo, isFilter }) {
   function changeDone(targetId, setTodo) {
     const copyTodo = [...todo];
     const targetIndex = copyTodo.findIndex((item) => item.id === targetId);
-    copyTodo[targetIndex].done = !copyTodo[targetIndex].done;
+    const { id, content, done } = copyTodo[targetIndex];
 
-    setTodo(copyTodo);
+    setTodo([
+      ...copyTodo.slice(0, targetIndex),
+      { id, content, done: !done },
+      ...copyTodo.slice(targetIndex + 1),
+    ]);
   }
 
   function deleteItem(targetId, setTodo) {
