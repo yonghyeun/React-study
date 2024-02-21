@@ -6,8 +6,6 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   const [text, setText] = useState('');
 
-  console.log('렌더링 됐습니다 !');
-
   function handleType(e) {
     setText(e.target.value);
   }
@@ -35,12 +33,21 @@ export default function App() {
     );
   }
 
+  function handleRemove(targetId) {
+    setTasks(tasks.filter((task) => task.id !== targetId));
+  }
+
   return (
     <>
       <h1>To Do List</h1>
       <Input onChange={handleType} />
       <Button onClick={handleAdd}>추가</Button>
-      <TodoList tasks={tasks} onSave={handleSave} onEdit={handleEdit} />
+      <TodoList
+        tasks={tasks}
+        onSave={handleSave}
+        onEdit={handleEdit}
+        onRemove={handleRemove}
+      />
     </>
   );
 }
@@ -55,19 +62,20 @@ function Button({ onClick, children }) {
   return <button onClick={onClick}>{children}</button>;
 }
 
-function TodoList({ tasks, onSave, onEdit }) {
+function TodoList({ tasks, onSave, onEdit, onRemove }) {
   if (!tasks) return;
 
   return (
     <ul>
       {tasks.map((task) => {
         return (
-          <li key={task.id}>
+          <li key={task.id} style={{ display: 'flex' }}>
             {task.isEdit ? (
               <TodoInput key={task.id} task={task} onSave={onSave} />
             ) : (
               <TodoText key={task.id} task={task} onEdit={onEdit} />
             )}
+            <Button onClick={() => onRemove(task.id)}>Remove</Button>
           </li>
         );
       })}
@@ -78,7 +86,7 @@ function TodoList({ tasks, onSave, onEdit }) {
 function TodoInput({ task, onSave }) {
   const [localText, setLocalText] = useState(task.content);
   return (
-    <div>
+    <>
       <input
         type='text'
         onChange={(e) => setLocalText(e.target.value)}
@@ -91,7 +99,7 @@ function TodoInput({ task, onSave }) {
       >
         Save
       </Button>
-    </div>
+    </>
   );
 }
 
