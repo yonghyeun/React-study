@@ -2,10 +2,11 @@
   margin: 0px;
   padding: 0px;
   color: white;
+  font-family: 'Bagel Fat One', system-ui;
 }
 
 body {
-  background: url('https://pxwall.com/wp-content/uploads/2021/06/1920x1080-4k-Wallpaper.jpg');
+  background: url('https://images.pexels.com/photos/807598/pexels-photo-807598.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
   background-size: cover;
   height: 100vh;
   display: flex;
@@ -30,7 +31,7 @@ body {
 button {
   width: 50x;
   font-size: 10px;
-  background-color: palevioletred;
+  background-color: green;
   padding: 10px;
   border-radius: 20px;
   border: none;
