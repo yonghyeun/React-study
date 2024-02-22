@@ -64,6 +64,9 @@ export default function App() {
  * @returns {Array} 새로 갱신 할 State
  */
 function taskReducer(tasks, action) {
+  // state 변경이 일어날 떄 발생한 action 을 debuging 하기 좋음
+  console.log(action);
+
   switch (action.type) {
     // add 일 때 필요한 action 프로퍼티는 text
     case 'add': {
