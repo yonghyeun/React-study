@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './App.css';
 
 let nextId = 0;
 
@@ -14,11 +15,11 @@ export default function App() {
     setTasks([...tasks, { id: nextId++, content: text, isEdit: false }]);
   }
 
-  function handleSave(id, newContent) {
+  function handleSave(targetId, newContent) {
     setTasks(
       tasks.map((task) => {
-        if (task.id === id)
-          return { id: id, content: newContent, isEdit: false };
+        if (task.id === targetId)
+          return { id: targetId, content: newContent, isEdit: false };
         return task;
       }),
     );
@@ -40,8 +41,10 @@ export default function App() {
   return (
     <>
       <h1>To Do List</h1>
-      <Input onChange={handleType} />
-      <Button onClick={handleAdd}>추가</Button>
+      <div className='header'>
+        <Input onChange={handleType} />
+        <Button onClick={handleAdd}>Add</Button>
+      </div>
       <TodoList
         tasks={tasks}
         onSave={handleSave}
@@ -66,20 +69,20 @@ function TodoList({ tasks, onSave, onEdit, onRemove }) {
   if (!tasks) return;
 
   return (
-    <ul>
+    <>
       {tasks.map((task) => {
         return (
-          <li key={task.id} style={{ display: 'flex' }}>
+          <div key={task.id} className='container'>
             {task.isEdit ? (
               <TodoInput key={task.id} task={task} onSave={onSave} />
             ) : (
               <TodoText key={task.id} task={task} onEdit={onEdit} />
             )}
             <Button onClick={() => onRemove(task.id)}>Remove</Button>
-          </li>
+          </div>
         );
       })}
-    </ul>
+    </>
   );
 }
 
