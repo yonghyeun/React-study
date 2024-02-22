@@ -1,0 +1,59 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  color: white;
+}
+
+body {
+  background: url('https://pxwall.com/wp-content/uploads/2021/06/1920x1080-4k-Wallpaper.jpg');
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#root {
+  backdrop-filter: blur(30px);
+  padding: 50px;
+  width: 300px;
+  /* border: 5px solid white; */
+  border-radius: 20%;
+}
+
+.header {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0px;
+}
+
+button {
+  width: 50x;
+  font-size: 10px;
+  background-color: palevioletred;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+}
+
+input {
+  border-radius: 20px;
+  border: none;
+  padding: 10px;
+  color: black;
+}
+
+.container {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
+.container p {
+  width: 200px;
+}
+
+li {
+  display: flex;
+  gap: 5px;
+}
