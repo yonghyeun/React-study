@@ -4,16 +4,12 @@ import {
   useStarContext,
 } from '../ContextProvider.js';
 
-import { flushSync } from 'react-dom';
-
 export default function AddButton() {
   const stars = useStarContext();
   const lastStarRef = useRefContext();
   const setStars = useSetterContext();
 
   function handleAdd() {
-    console.log(stars);
-
     const sliceCopied = stars.slice(0, stars.length - 1);
     setStars([
       ...sliceCopied,
