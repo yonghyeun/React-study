@@ -1,0 +1,36 @@
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #aaa;
+}
+
+.room {
+  width: 300px;
+  height: 300px;
+  border-radius: 20%;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: antiquewhite;
+}
+
+.ball {
+  width: 0px;
+  height: 0px;
+  background: radial-gradient(green, yellow);
+  color: white;
+  border-radius: 20%;
+  display: flex;
+  font-size: 0px;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  position: fixed;
+  transform: translateY(-30px);
+}
