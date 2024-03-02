@@ -44,13 +44,29 @@ function Counter({ color }) {
   return (
     <div className='container' style={{ backgroundColor: color }}>
       <p>{num}</p>
-      <button
-        onClick={() => {
-          setNum(num + 1);
-        }}
-      >
-        Increase Number
-      </button>
+      <div className='wrapper'>
+        <button
+          onClick={() => {
+            setNum(num + 1);
+          }}
+        >
+          Increase Number
+        </button>
+        <button
+          onClick={() => {
+            setNum(num - 1);
+          }}
+        >
+          Subtract Number
+        </button>
+        <button
+          onClick={() => {
+            setNum(0);
+          }}
+        >
+          Reset Number
+        </button>
+      </div>
     </div>
   );
 }

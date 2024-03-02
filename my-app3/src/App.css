@@ -36,30 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-.container {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  width: 100px;
-  height: 100px;
-  padding: 10px;
-  border: 1px solid black;
-  border-radius: 20%;
-}
-
-p {
-  display: inline-block;
-  text-align: center;
-}
-
-.wrapper {
-  display: flex;
-  gap: 10px;
-  padding: 30px;
-}
-
-.button-wrapper {
-  display: flex;
-  gap: 10px;
-}

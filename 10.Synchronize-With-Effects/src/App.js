@@ -1,16 +1,9 @@
-useEffect(() => {
-  let ignore = false;
+import { useState } from 'react';
 
-  async function startFetching() {
-    const json = await fetchTodos(userId);
-    if (!ignore) {
-      setTodos(json);
-    }
-  }
+export default function App() {
+  const [num, setNum] = useState(0);
+  const arr = [1, 2, 3, 4, 5];
+  console.log(arr.find((item) => item === 999));
 
-  startFetching();
-
-  return () => {
-    ignore = true;
-  };
-}, [userId]);
+  return <div>{num}</div>;
+}
