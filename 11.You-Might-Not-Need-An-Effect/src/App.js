@@ -1,70 +1,52 @@
 import { useState, useEffect } from 'react';
 
-let nextId = 0;
-let calls = 0;
+export default function App({ savedContact, onSave }) {
+  const [name, setName] = useState(savedContact.name);
+  const [email, setEmail] = useState(savedContact.email);
 
-function getVisibleTodos(todos, showActive) {
-  console.log(`getVisibleTodos() was called ${++calls} times`);
-  const activeTodos = todos.filter((todo) => !todo.completed);
-  const visibleTodos = showActive ? activeTodos : todos;
-  return visibleTodos;
-}
-
-function createTodo(text, completed = false) {
-  return {
-    id: nextId++,
-    text,
-    completed,
-  };
-}
-
-const initialTodos = [
-  createTodo('Get apples', true),
-  createTodo('Get oranges', true),
-  createTodo('Get carrots'),
-];
-
-export default function App() {
-  const [todos, setTodos] = useState(initialTodos);
-  const [showActive, setShowActive] = useState(false);
-  const visibleTodos = getVisibleTodos(todos, showActive);
+  useEffect(() => {
+    setName(savedContact.name);
+    setEmail(savedContact.email);
+  }, [savedContact]);
 
   return (
-    <>
+    <section>
       <label>
+        Name:{' '}
         <input
-          type='checkbox'
-          checked={showActive}
-          onChange={(e) => setShowActive(e.target.checked)}
+          type='text'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
-        Show only active todos
       </label>
-      <NewTodo
-        onAdd={(newtodo) => {
-          setTodos([...todos, newtodo]);
+      <label>
+        Email:{' '}
+        <input
+          type='email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </label>
+      <button
+        onClick={() => {
+          const updatedData = {
+            id: savedContact.id,
+            name: name,
+            email: email,
+          };
+          onSave(updatedData);
         }}
-      />
-      <ul>
-        {visibleTodos.map((todo) => (
-          <li key={todo.id}>
-            {todo.completed ? <s>{todo.text}</s> : todo.text}
-          </li>
-        ))}
-      </ul>
-    </>
-  );
-}
-
-function NewTodo({ onAdd }) {
-  const [text, setText] = useState('');
-  function handleAddClick() {
-    onAdd(createTodo(text));
-  }
-
-  return (
-    <>
-      <input value={text} onChange={(e) => setText(e.target.value)} />
-      <button onClick={handleAddClick}>Add</button>
-    </>
+      >
+        Save
+      </button>
+      <button
+        onClick={() => {
+          setName(savedContact.name);
+          setEmail(savedContact.email);
+        }}
+      >
+        Reset
+      </button>
+    </section>
   );
 }
