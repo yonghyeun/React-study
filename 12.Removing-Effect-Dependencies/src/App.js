@@ -54,6 +54,7 @@ function ChatRoom({ roomId, theme }) {
   const [text, setText] = useState('');
   const networkRef = useRef(null);
 
+  // 1. roomId 만을 가지고 연결만 하는 Effect
   useEffect(() => {
     if (!networkRef.current) {
       networkRef.current = createConnection(roomId);
@@ -67,6 +68,7 @@ function ChatRoom({ roomId, theme }) {
     };
   }, [roomId]);
 
+  // 2. theme 만을 가지고 테마만 변경하는 Effect
   useEffect(() => {
     if (networkRef.current) {
       networkRef.current.updateTheme(theme);
@@ -84,6 +86,8 @@ function ChatRoom({ roomId, theme }) {
 }
 
 function createConnection(roomId) {
+  // 인수를 독립적으로 하나씩 받도록 수정하여
+  // 두 개의 reactive value 를 동시에 받지 않도록 수정
   let currentRoomId = roomId;
   let currentTheme = 'default'; // 초기 테마 값을 설정
 
