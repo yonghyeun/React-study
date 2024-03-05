@@ -1,110 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import ChatRoom from './Component/ChatRoom';
+import Selector from './Component/Selector';
+import { ConnectionProvider } from './Core/connectionContext';
 
 export default function App() {
-  const [roomId, setRoomId] = useState('general');
-  const [theme, setTheme] = useState('default');
-
   return (
-    <>
-      <SelectServer setRoomId={setRoomId} />
-      <SelectTheme setTheme={setTheme} />
-      <ChatRoom roomId={roomId} theme={theme} />
-    </>
+    <ConnectionProvider>
+      <Selector />
+      <ChatRoom />
+    </ConnectionProvider>
   );
-}
-
-function SelectTheme({ setTheme }) {
-  function handleSelect(e) {
-    setTheme(e.target.value);
-  }
-
-  return (
-    <main>
-      <label htmlFor='theme'>
-        적용 할 테마를 골라주세요{' '}
-        <select name='theme' id='theme' onChange={handleSelect}>
-          <option value='default'>Default Mode</option>
-          <option value='DarkMode'>Dark Mode</option>
-        </select>
-      </label>
-    </main>
-  );
-}
-
-function SelectServer({ setRoomId }) {
-  function handleSelect(e) {
-    setRoomId(e.target.value);
-  }
-
-  return (
-    <main>
-      <label htmlFor='category'>
-        연결 할 서버를 골라주세요{' '}
-        <select name='category' id='category' onChange={handleSelect}>
-          <option value='general'>General</option>
-          <option value='music'>Music</option>
-          <option value='game'>Game</option>
-        </select>
-      </label>
-    </main>
-  );
-}
-
-function ChatRoom({ roomId, theme }) {
-  const [text, setText] = useState('');
-  const networkRef = useRef(null);
-
-  // 1. roomId 만을 가지고 연결만 하는 Effect
-  useEffect(() => {
-    if (!networkRef.current) {
-      networkRef.current = createConnection(roomId);
-      networkRef.current.connect();
-    } else {
-      networkRef.current.updateRoomId(roomId);
-    }
-
-    return () => {
-      networkRef.current.disconnect();
-    };
-  }, [roomId]);
-
-  // 2. theme 만을 가지고 테마만 변경하는 Effect
-  useEffect(() => {
-    if (networkRef.current) {
-      networkRef.current.updateTheme(theme);
-    }
-  }, [theme]);
-
-  return (
-    <input
-      type='text'
-      onChange={(e) => {
-        setText(e.target.value);
-      }}
-    />
-  );
-}
-
-function createConnection(roomId) {
-  // 인수를 독립적으로 하나씩 받도록 수정하여
-  // 두 개의 reactive value 를 동시에 받지 않도록 수정
-  let currentRoomId = roomId;
-  let currentTheme = 'default'; // 초기 테마 값을 설정
-
-  return {
-    connect() {
-      console.log(`${currentRoomId}과 연결을 시작합니다`);
-    },
-    disconnect() {
-      console.log(`${currentRoomId}과 연결을 종료합니다`);
-    },
-    updateRoomId(newRoomId) {
-      currentRoomId = newRoomId;
-      console.log(`${newRoomId}과 연결을 시작합니다`);
-    },
-    updateTheme(newTheme) {
-      currentTheme = newTheme;
-      console.log(`${currentTheme}로 메시지를 주고 받습니다`);
-    },
-  };
 }
