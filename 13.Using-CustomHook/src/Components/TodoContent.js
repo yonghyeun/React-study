@@ -1,24 +1,15 @@
 /* ./Components/TodoContent.js */
 
-import { useEffect, useState } from 'react';
+import { useState, useCallback } from 'react';
+import useFetching from '../Hook/useFetching';
 
 export default function TodoContent({ userId }) {
   const [todos, setTodos] = useState([]);
+  const memorizedSetTodos = useCallback((res) => {
+    setTodos(res);
+  }, []);
 
-  useEffect(() => {
-    let flag = true;
-    const serverUrl = 'https://jsonplaceholder.typicode.com';
-
-    fetch(serverUrl + `/todos?userId=${userId}`)
-      .then((res) => res.json())
-      .then((json) => {
-        if (flag) setTodos(json);
-      });
-
-    return () => {
-      flag = false;
-    };
-  }, [userId]);
+  useFetching(`/todos?userId=${userId}`, memorizedSetTodos);
 
   return (
     <ul>

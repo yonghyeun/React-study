@@ -1,4 +1,4 @@
-#root {
+main {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,7 +6,7 @@
 }
 
 ul {
-  max-width: 60vw;
+  width: 30vw;
   padding: 50px;
   background-color: antiquewhite;
 }

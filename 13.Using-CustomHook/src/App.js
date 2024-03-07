@@ -12,10 +12,10 @@ export default function App() {
   }
 
   return (
-    <>
+    <main>
       <Selector userId={userId} onChange={handleChange} />
       <TodoTitle userId={userId} />
       <TodoContent userId={userId} />
-    </>
+    </main>
   );
 }

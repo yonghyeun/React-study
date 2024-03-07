@@ -13,5 +13,5 @@ export default function useFetching(queryString, callbackFn) {
     return () => {
       flag = false;
     };
-  }, [queryString]);
+  }, [queryString, callbackFn]); // callbackFn 은 useCallback 을 이용해야 한다.
 }
