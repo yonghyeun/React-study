@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
-import Root from './routes/root';
+import { Root, loader as rootloader } from './routes/root';
+import Contact from './routes/contacts';
 import ErrorPage from './error-page';
-import Contact from './contacts';
 
 /* root route 설정 */
 const router = createBrowserRouter([
@@ -12,10 +12,8 @@ const router = createBrowserRouter([
     path: '/',
     element: <Root />,
     errorElement: <ErrorPage />,
-    children: [
-      // Contact 컴포넌트를 Root 컴포넌트의 하위 컴포넌트로 생성
-      { path: 'contacts/:contactId', element: <Contact /> },
-    ],
+    loader: rootloader,
+    children: [{ path: 'contacts/:contactId', element: <Contact /> }],
   },
 ]);
 
