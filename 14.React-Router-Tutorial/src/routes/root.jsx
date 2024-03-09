@@ -1,9 +1,11 @@
-import { Outlet, Link, useLoaderData } from 'react-router-dom';
-import { getContacts } from '../contact';
+import { Outlet, Link, useLoaderData, Form } from 'react-router-dom';
+import { getContacts, createContact } from '../contact';
 
 export function Root() {
+  // useLoaderData 훅을 이용해 routes 에서 정의된 loader 메소드가
+  // 반환하는 값을 컴포넌트 내부에서 불러와 사용
   const { contacts } = useLoaderData();
-
+  console.log(contacts);
   return (
     <>
       <div id='sidebar'>
@@ -20,31 +22,33 @@ export function Root() {
             <div id='search-spinner' aria-hidden hidden={true} />
             <div className='sr-only' aria-live='polite'></div>
           </form>
-          <form method='post'>
+          <Form method='post'>
             <button type='submit'>New</button>
-          </form>
+          </Form>
         </div>
         <nav>
-          {contacts.length ? (
-            contacts.map((contact) => (
-              <li key={contact.id}>
-                <Link to={`contacts/${contact.id}`}>
-                  {contact.first || contact.last ? (
-                    <>
-                      {contact.first} {contact.last}
-                    </>
-                  ) : (
-                    <i>No name</i>
-                  )}{' '}
-                  {contact.favorite && <span>★</span>}
-                </Link>
-              </li>
-            ))
-          ) : (
-            <p>
-              <i>No contacts</i>
-            </p>
-          )}
+          <ul>
+            {contacts.length ? (
+              contacts.map((contact) => (
+                <li key={contact.id}>
+                  <Link to={`contacts/${contact.id}`}>
+                    {contact.first || contact.last ? (
+                      <>
+                        {contact.first} {contact.last}
+                      </>
+                    ) : (
+                      <i>No name</i>
+                    )}{' '}
+                    {contact.favorite && <span>★</span>}
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <p>
+                <i>No contacts</i>
+              </p>
+            )}
+          </ul>
         </nav>
       </div>
       <div id='detail'>
@@ -55,7 +59,11 @@ export function Root() {
 }
 
 export async function loader() {
-  const { contacts } = await getContacts();
+  const contacts = await getContacts();
+  return { contacts };
+}
 
-  return contacts;
+export async function action() {
+  const contact = await createContact();
+  return { contact };
 }

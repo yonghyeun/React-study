@@ -2,7 +2,11 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
-import { Root, loader as rootloader } from './routes/root';
+import {
+  Root,
+  loader as rootloader,
+  action as rootaction,
+} from './routes/root';
 import Contact from './routes/contacts';
 import ErrorPage from './error-page';
 
@@ -13,6 +17,7 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     loader: rootloader,
+    action: rootaction,
     children: [{ path: 'contacts/:contactId', element: <Contact /> }],
   },
 ]);
