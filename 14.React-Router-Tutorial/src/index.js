@@ -7,8 +7,9 @@ import {
   loader as rootloader,
   action as rootaction,
 } from './routes/root';
-import Contact from './routes/contacts';
+import { Contact, loader as contactLoader } from './routes/contacts';
 import ErrorPage from './error-page';
+import { EditContact, action as editAction } from './routes/edit';
 
 /* root route 설정 */
 const router = createBrowserRouter([
@@ -18,7 +19,19 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     loader: rootloader,
     action: rootaction,
-    children: [{ path: 'contacts/:contactId', element: <Contact /> }],
+    children: [
+      {
+        path: 'contacts/:contactId',
+        loader: contactLoader,
+        element: <Contact />,
+      },
+      {
+        path: 'contacts/:contactId/edit',
+        loader: contactLoader,
+        action: editAction,
+        element: <EditContact />,
+      },
+    ],
   },
 ]);
 

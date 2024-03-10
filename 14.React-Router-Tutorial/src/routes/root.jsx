@@ -1,11 +1,11 @@
-import { Outlet, Link, useLoaderData, Form } from 'react-router-dom';
+import { Outlet, Link, useLoaderData, Form, redirect } from 'react-router-dom';
 import { getContacts, createContact } from '../contact';
 
 export function Root() {
   // useLoaderData 훅을 이용해 routes 에서 정의된 loader 메소드가
   // 반환하는 값을 컴포넌트 내부에서 불러와 사용
   const { contacts } = useLoaderData();
-  console.log(contacts);
+
   return (
     <>
       <div id='sidebar'>
@@ -65,5 +65,5 @@ export async function loader() {
 
 export async function action() {
   const contact = await createContact();
-  return { contact };
+  return redirect(`/contacts/${contact.id}/edit`);
 }

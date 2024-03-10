@@ -1,21 +1,15 @@
-import { Form } from 'react-router-dom';
+import { Form, useLoaderData } from 'react-router-dom';
+import { getContact } from '../contact';
 
-export default function Contact() {
-  const contact = {
-    first: 'Your',
-    last: 'Name',
-    avatar: 'https://placekitten.com/200/200',
-    twitter: 'your_handle',
-    notes: 'Some notes',
-    favorite: true,
-  };
+export function Contact() {
+  const { contact } = useLoaderData();
 
   return (
     <div id='contact'>
       <div>
         <img
           src={contact.avatar || null}
-          alt={contact.first + contact.last}
+          alt={contact.first + contact.last || null}
           key={contact.avatar}
         />
       </div>
@@ -37,6 +31,8 @@ export default function Contact() {
             </a>
           </p>
         )}
+
+        {contact.notes && <p>{contact.notes}</p>}
 
         <div>
           <Form action='edit'>
@@ -74,4 +70,10 @@ function Favorite({ contact }) {
       </button>
     </Form>
   );
+}
+
+export async function loader({ params }) {
+  const contactId = params.contactId;
+  const contact = await getContact(contactId);
+  return { contact };
 }
