@@ -1,11 +1,20 @@
-import { Outlet, Link, useLoaderData, Form, redirect } from 'react-router-dom';
+import {
+  Outlet,
+  NavLink,
+  useLoaderData,
+  Form,
+  redirect,
+  useNavigation,
+} from 'react-router-dom';
 import { getContacts, createContact } from '../contact';
 
 export function Root() {
+  console.log('렌더링됩니다');
+
   // useLoaderData 훅을 이용해 routes 에서 정의된 loader 메소드가
   // 반환하는 값을 컴포넌트 내부에서 불러와 사용
   const { contacts } = useLoaderData();
-
+  const navigation = useNavigation();
   return (
     <>
       <div id='sidebar'>
@@ -31,7 +40,7 @@ export function Root() {
             {contacts.length ? (
               contacts.map((contact) => (
                 <li key={contact.id}>
-                  <Link to={`contacts/${contact.id}`}>
+                  <NavLink to={`contacts/${contact.id}`}>
                     {contact.first || contact.last ? (
                       <>
                         {contact.first} {contact.last}
@@ -40,7 +49,7 @@ export function Root() {
                       <i>No name</i>
                     )}{' '}
                     {contact.favorite && <span>★</span>}
-                  </Link>
+                  </NavLink>
                 </li>
               ))
             ) : (
@@ -51,7 +60,10 @@ export function Root() {
           </ul>
         </nav>
       </div>
-      <div id='detail'>
+      <div
+        id='detail'
+        className={navigation.state === 'loading' ? 'loading' : ''}
+      >
         <Outlet />
       </div>
     </>
