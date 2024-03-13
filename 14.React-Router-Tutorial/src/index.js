@@ -7,9 +7,15 @@ import {
   loader as rootloader,
   action as rootaction,
 } from './routes/root';
-import { Contact, loader as contactLoader } from './routes/contacts';
+import {
+  Contact,
+  loader as contactLoader,
+  action as contactAction,
+} from './routes/contacts';
+import { action as deleteAction } from './routes/destory';
 import ErrorPage from './error-page';
 import { EditContact, action as editAction } from './routes/edit';
+import Index from './routes';
 
 /* root route 설정 */
 const router = createBrowserRouter([
@@ -20,16 +26,24 @@ const router = createBrowserRouter([
     loader: rootloader,
     action: rootaction,
     children: [
+      { index: true, element: <Index /> },
       {
         path: 'contacts/:contactId',
         loader: contactLoader,
+        action: contactAction,
         element: <Contact />,
+        errorElement: <ErrorPage />,
       },
       {
         path: 'contacts/:contactId/edit',
         loader: contactLoader,
         action: editAction,
         element: <EditContact />,
+      },
+      {
+        path: 'contacts/:contactId/destory',
+        action: deleteAction,
+        errorElement: <h1> 삭제에 실패했슴둥</h1>,
       },
     ],
   },

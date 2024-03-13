@@ -36,6 +36,7 @@ export async function updateContact(id, updates) {
   let contact = contacts.find((contact) => contact.id === id);
   if (!contact) throw new Error('No contact found for', id);
   Object.assign(contact, updates);
+
   await set(contacts);
   return contact;
 }
@@ -69,10 +70,6 @@ async function fakeNetwork(key) {
 
   fakeCache[key] = true;
   return new Promise((res) => {
-    setTimeout(
-      res,
-      //  Math.random() * 800
-      2000,
-    );
+    setTimeout(res, Math.random() * 800);
   });
 }

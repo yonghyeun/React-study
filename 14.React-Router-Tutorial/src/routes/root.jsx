@@ -5,32 +5,53 @@ import {
   Form,
   redirect,
   useNavigation,
+  useSubmit,
 } from 'react-router-dom';
 import { getContacts, createContact } from '../contact';
-
+import { useRef, useEffect } from 'react';
 export function Root() {
-  console.log('렌더링됩니다');
-
-  // useLoaderData 훅을 이용해 routes 에서 정의된 loader 메소드가
-  // 반환하는 값을 컴포넌트 내부에서 불러와 사용
-  const { contacts } = useLoaderData();
+  const { contacts, param } = useLoaderData();
   const navigation = useNavigation();
+  const submit = useSubmit();
+  const inputRef = useRef();
+
+  /*
+  navigation 객체의 location 은 state 가  loading 일 때 
+  요청을 보낸 API 의 endpoint 를 가리킨다. 
+  isSearching 은 location 의 state 가 loading 이면서 , api 요청이 
+  /?q=.. 를 이용한 것인지 를 묻는 것이다. 
+   */
+  const isSearching =
+    navigation.location &&
+    new URLSearchParams(navigation.location.search).has('q');
+
+  useEffect(() => {
+    inputRef.current.value = param;
+  }, [param]);
+
   return (
     <>
       <div id='sidebar'>
         <h1>React Router Contacts</h1>
         <div>
-          <form id='search-form' role='search'>
+          <Form id='search-form' role='search'>
             <input
               id='q'
               aria-label='Search contacts'
               placeholder='Search'
               type='search'
               name='q'
+              defaultValue={param}
+              ref={inputRef}
+              onChange={(event) => {
+                const isFirstSearching = param == null;
+                submit(event.target.form, { replace: !isFirstSearching });
+              }}
+              className={navigation.state === 'loading' ? 'loading' : ''}
             />
-            <div id='search-spinner' aria-hidden hidden={true} />
+            <div id='search-spinner' aria-hidden hidden={!isSearching}></div>
             <div className='sr-only' aria-live='polite'></div>
-          </form>
+          </Form>
           <Form method='post'>
             <button type='submit'>New</button>
           </Form>
@@ -70,9 +91,12 @@ export function Root() {
   );
 }
 
-export async function loader() {
-  const contacts = await getContacts();
-  return { contacts };
+export async function loader({ request }) {
+  const url = new URL(request.url);
+  const param = url.searchParams.get('q');
+  const contacts = await getContacts(param);
+
+  return { contacts, param };
 }
 
 export async function action() {
