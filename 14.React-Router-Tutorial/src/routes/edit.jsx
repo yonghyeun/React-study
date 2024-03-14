@@ -2,7 +2,7 @@ import { Form, useLoaderData, redirect, useNavigate } from 'react-router-dom';
 import { updateContact } from '../contact';
 
 export function EditContact() {
-  const contact = useLoaderData();
+  const { contact } = useLoaderData();
   const navigate = useNavigate();
   return (
     <Form method='post' id='contact-form'>

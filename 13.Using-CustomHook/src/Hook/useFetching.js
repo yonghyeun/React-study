@@ -1,6 +1,10 @@
+/* ./Hook/useFetching.js */
+
 import { useEffect } from 'react';
 
+
 export default function useFetching(queryString, callbackFn) {
+
   useEffect(() => {
     let flag = true;
     const serverUrl = 'https://jsonplaceholder.typicode.com';
@@ -13,5 +17,6 @@ export default function useFetching(queryString, callbackFn) {
     return () => {
       flag = false;
     };
-  }, [queryString, callbackFn]); // callbackFn 은 useCallback 을 이용해야 한다.
+  }, [queryString, callbackFn]); 
+  // callbackFn 은 useCallback 을 이용한 MemorizationCallbackFn 이여야한다.
 }
