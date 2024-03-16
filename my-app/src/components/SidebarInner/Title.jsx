@@ -1,6 +1,14 @@
+import { useNavigate } from 'react-router-dom';
+
 export default function Title() {
+  const navigate = useNavigate();
   return (
-    <div className='Title'>
+    <div
+      className='Title'
+      onClick={() => {
+        navigate('/');
+      }}
+    >
       <svg
         xmlns='http://www.w3.org/2000/svg'
         x='0px'

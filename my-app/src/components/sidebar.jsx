@@ -1,4 +1,4 @@
-import Title from './Title';
+import Title from './SidebarInner/Title';
 import { NavLink } from 'react-router-dom';
 
 export default function SideBar() {
@@ -11,7 +11,7 @@ export default function SideBar() {
         <nav>
           <ul>
             <li>
-              <NavLink>menu 1</NavLink>
+              <NavLink to='/menu1'>menu 1</NavLink>
             </li>
             <li>
               <NavLink>menu 2</NavLink>
