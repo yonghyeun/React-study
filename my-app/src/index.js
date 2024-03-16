@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Main from './routes/MainPage';
+import Index from './routes/Index';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import ErrorPage from './routes/ErrorPage';
+import { Login, action as loginAction } from './routes/Login';
 
 const router = createBrowserRouter([
   {
@@ -12,8 +14,19 @@ const router = createBrowserRouter([
     element: <Main />,
     errorElement: <ErrorPage />,
     children: [
-      { path: 'login', element: null, errorElement: <ErrorPage /> },
+      { index: true, element: <Index /> },
+      {
+        path: 'Login',
+        element: <Login />,
+        errorElement: <ErrorPage />,
+        action: loginAction,
+      },
       { path: 'MyPage', element: null, errorElement: <ErrorPage /> },
+      {
+        path: 'content/:contentId',
+        element: null, // TODO content element 추가하기
+        errorElement: <ErrorPage />,
+      },
     ],
   },
 ]);

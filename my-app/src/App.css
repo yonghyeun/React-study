@@ -52,6 +52,15 @@
   flex-direction: column;
 }
 
+#detail #error-main {
+  height: 100%;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 #error-main i {
   color: #aaa;
 }
@@ -131,5 +140,18 @@
   height: 100%;
   border: 1px solid black;
   padding: 3rem;
-  background-color: navy;
+}
+
+/* Login Form */
+#form-login {
+  width: 30rem;
+}
+
+#form-login input {
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+#form-login button {
+  padding: 1rem;
 }

@@ -11,16 +11,16 @@ export default function SideBar() {
         <nav>
           <ul>
             <li>
-              <NavLink to='/menu1'>menu 1</NavLink>
+              <NavLink to='content/menu1'>menu 1</NavLink>
             </li>
             <li>
-              <NavLink>menu 2</NavLink>
+              <NavLink to='content/menu2'>menu 2</NavLink>
             </li>
             <li>
-              <NavLink>menu 3</NavLink>
+              <NavLink to='content/menu3'>menu 3</NavLink>
             </li>
             <li>
-              <NavLink>menu 4</NavLink>
+              <NavLink to='content/menu4'>menu 4</NavLink>
             </li>
           </ul>
         </nav>

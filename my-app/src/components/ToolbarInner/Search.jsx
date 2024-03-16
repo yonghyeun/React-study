@@ -6,7 +6,13 @@ export default function Search() {
 
   return (
     <Form>
-      <input type='search' id='q' name='q' placeholder='Search' />
+      <input
+        type='search'
+        id='q'
+        name='q'
+        placeholder='Search'
+        autoComplete='off'
+      />
     </Form>
   );
 }
