@@ -1,53 +1,135 @@
 * {
-  margin: 0px;
   padding: 0px;
+  margin: 0px;
 }
 
-a {
-  text-decoration: none;
-  border: 1px solid black;
-  padding: 10px;
-  border-radius: 20%;
+.App {
+  text-align: center;
 }
 
-a:visited {
-  color: inherit;
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
 }
 
-ul {
-  margin: 30px auto;
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 30px;
-  width: 100vw;
-}
-
-h1 {
-  margin: 10px auto;
-  width: 50vw;
-  display: flex;
-  justify-content: center;
-  padding: 30px;
-  border: 1px solid green;
-}
-
-.custom-active {
-  background-color: green;
-  color: red;
-}
-
-.custom-pending {
-  background-color: orange;
-}
-
-.custom-transtioning {
-  background-color: red;
-}
-
-.active-text {
+  font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.default-text {
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* error page  */
+#error-main {
+  height: 100vh;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#error-main i {
+  color: #aaa;
+}
+
+/* Side-bar */
+.Title {
+  display: flex;
+  gap: 5px;
+  font-size: 1.5rem;
+}
+
+.Title svg {
+  width: 3rem;
+  height: 3rem;
+}
+
+.Title p {
+  display: flex;
+  align-items: center;
+}
+
+#side-bar {
+  border: 1px solid black;
+  width: 20vw;
+  height: 100vh;
+}
+
+#side-bar-main {
+  display: flex;
+  font-size: 1.5rem;
+}
+
+#side-bar-main nav {
+  padding: 10px;
+}
+
+#side-bar-main ul {
+  list-style: none;
+}
+
+#side-bar-main ul a {
+  text-decoration: none;
   color: black;
+}
+
+#side-bar-main ul a :visited {
+  color: inherits;
+}
+
+/* Toolbar */
+
+#toolbar {
+  width: 80vw;
+  padding: 0.5rem 1rem;
+  display: flex;
+  border: 1px solid black;
+}
+
+#toolbar > div {
+  display: flex;
+  gap: 0.3rem;
+}
+
+#toolbar form {
+  flex-grow: 1;
+  margin-right: 0.3rem;
+}
+
+#toolbar form input {
+  width: 100%;
+}
+
+/* main content */
+
+#main-content {
+  width: 100%;
+  height: 100%;
+  border: 1px solid black;
+  padding: 3rem;
+  background-color: green;
 }

@@ -1,13 +1,30 @@
+import Title from './Title';
 import { NavLink } from 'react-router-dom';
 
-export default function Sidebar() {
+export default function SideBar() {
   return (
-    <nav className='side-bar'>
-      <ul>
-        <NavLink to='/content/1'>Content 1</NavLink>
-        <NavLink to='/content/2'>Content 2</NavLink>
-        <NavLink to='/content/3'>Content 3</NavLink>
-      </ul>
-    </nav>
+    <section id='side-bar'>
+      <header>
+        <Title />
+      </header>
+      <main id='side-bar-main'>
+        <nav>
+          <ul>
+            <li>
+              <NavLink>menu 1</NavLink>
+            </li>
+            <li>
+              <NavLink>menu 2</NavLink>
+            </li>
+            <li>
+              <NavLink>menu 3</NavLink>
+            </li>
+            <li>
+              <NavLink>menu 4</NavLink>
+            </li>
+          </ul>
+        </nav>
+      </main>
+    </section>
   );
 }
