@@ -1,12 +1,20 @@
 import { useNavigate } from 'react-router-dom';
+import { useLogin } from '../Context/context';
 
 export default function Index() {
   const navigate = useNavigate();
-  // TODO LoginStatus 쿠키에서 받아 사용하기
-  const LoginStatus = false;
-  const userId = '룰루뿅!';
+  const [isLogin, setIsLogin] = useLogin();
 
-  if (LoginStatus) {
+  let userId;
+  if (isLogin) {
+    const cookies = document.cookie.split(';');
+    const userIdCookie = cookies.find((cookie) =>
+      cookie.trim().startsWith('userId='),
+    );
+    userId = userIdCookie.split('=')[1];
+  }
+
+  if (isLogin) {
     return (
       <section>
         <h1>반갑습니다 {userId} 님</h1>

@@ -1,7 +1,6 @@
 import SideBar from '../Components/Sidebar';
 import Toolbar from '../Components/Toolbar';
 import { Outlet } from 'react-router-dom';
-
 import '../App.css';
 
 export default function Main() {

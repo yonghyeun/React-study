@@ -6,7 +6,9 @@ import Index from './routes/Index';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import ErrorPage from './routes/ErrorPage';
-import { Login, action as loginAction } from './routes/Login';
+import { Login } from './routes/Login';
+
+import { ContextProvider } from './Context/context';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +21,6 @@ const router = createBrowserRouter([
         path: 'Login',
         element: <Login />,
         errorElement: <ErrorPage />,
-        action: loginAction,
       },
       { path: 'MyPage', element: null, errorElement: <ErrorPage /> },
       {
@@ -34,6 +35,8 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ContextProvider>
+      <RouterProvider router={router} />
+    </ContextProvider>
   </React.StrictMode>,
 );

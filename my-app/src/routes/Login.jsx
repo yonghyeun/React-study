@@ -1,10 +1,39 @@
-import { Form, redirect } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
+import { useLogin } from '../Context/context';
 
 export function Login() {
+  const [isLogin, setIsLogin] = useLogin();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const body = Object.fromEntries(formData.entries());
+
+    const request = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    };
+
+    const res = await fetch('/login', request);
+    const json = await res.json();
+
+    if (!res.ok) {
+      alert(json.message);
+      return null;
+    }
+    setIsLogin(true);
+    navigate('/');
+  };
+
   return (
     <>
       <h1>로그인 하기</h1>
-      <Form method='post' id='form-login'>
+      <Form method='post' id='form-login' onSubmit={handleSubmit}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <input
             type='text'
@@ -27,25 +56,27 @@ export function Login() {
   );
 }
 
-export async function action({ request }) {
-  const formData = await request.formData();
-  const requestBody = Object.fromEntries(formData);
+// export async function useAction({ request }) {
+//   const [isLogin, setIsLogin] = useLogin();
 
-  const loginRequest = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(requestBody),
-  };
+//   const formData = await request.formData();
+//   const requestBody = Object.fromEntries(formData);
 
-  const res = await fetch('/login', loginRequest);
-  const json = await res.json();
-  if (!res.ok) {
-    //res.status 가 200~299 가 아닐 때
-    alert(`${json.message}`);
-    return null; // 현재 path 에 존재하기
-  }
+//   const loginRequest = {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(requestBody),
+//   };
 
-  return redirect('/'); // 로그인이 성공했을 때에는 '/' 경로로 redirect
-}
+//   const res = await fetch('/login', loginRequest);
+//   const json = await res.json();
+//   if (!res.ok) {
+//     //res.status 가 200~299 가 아닐 때
+//     alert(`${json.message}`);
+//     return null; // 현재 path 에 존재하기
+//   }
+//   setIsLogin(true);
+//   return redirect('/'); // 로그인이 성공했을 때에는 '/' 경로로 redirect
+// }
