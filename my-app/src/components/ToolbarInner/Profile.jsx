@@ -1,20 +1,16 @@
-import { Form } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../Context/context';
-export default function Profile() {
-  const [isLogin, setIsLogin] = useLogin();
+import { getCookie } from '../../function';
 
-  let userId;
-  const cookies = document.cookie.split(';');
-  if (isLogin) {
-    const userIdCookie = cookies.find((cookie) =>
-      cookie.trim().startsWith('userId='),
-    );
-    if (userIdCookie) userId = userIdCookie.split('=')[1];
+export default function Profile() {
+  const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useLogin();
+  function handleClick() {
+    const userId = getCookie('userId');
+    const destination = isLogin ? `/MyPage/${userId}` : 'Login';
+
+    navigate(destination);
   }
 
-  return (
-    <Form method='get' action={isLogin ? `/MyPage/:${userId}` : 'Login'}>
-      <button>{isLogin ? 'MyPage' : 'Login'}</button>
-    </Form>
-  );
+  return <button onClick={handleClick}>{isLogin ? 'MyPage' : 'Login'}</button>;
 }

@@ -7,7 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import ErrorPage from './routes/ErrorPage';
 import { Login } from './routes/Login';
-
+import { Mypage, loader as myPageLoader } from './routes/Mypage';
 import { ContextProvider } from './Context/context';
 
 const router = createBrowserRouter([
@@ -22,10 +22,15 @@ const router = createBrowserRouter([
         element: <Login />,
         errorElement: <ErrorPage />,
       },
-      { path: 'MyPage', element: null, errorElement: <ErrorPage /> },
       {
         path: 'content/:contentId',
         element: null, // TODO content element 추가하기
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: 'MyPage/:userId',
+        element: <Mypage />,
+        loader: myPageLoader,
         errorElement: <ErrorPage />,
       },
     ],
