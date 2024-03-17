@@ -1,5 +1,12 @@
 {
   "user1": {
-    "password": "password123"
+    "password": "password123",
+    "information": {
+      "firstName": "DongDong",
+      "lastName": "Kim",
+      "age": 20,
+      "gender": "Male",
+      "avatar": "https://img.freepik.com/free-vector/cute-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-4148.jpg?w=1060&t=st=1710658261~exp=1710658861~hmac=b6cb7478d745cdb91656cd0f9e4bb269bdd73db19adc1c43743393b0bdb666f5"
+    }
   }
 }
