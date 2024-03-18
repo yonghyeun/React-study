@@ -7,7 +7,6 @@ export function Mypage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('1');
     if (!isLogin) navigate('/Login');
   }, [isLogin, navigate]);
 

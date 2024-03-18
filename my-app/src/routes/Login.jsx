@@ -1,7 +1,5 @@
 import { Form, useNavigate } from 'react-router-dom';
 import { useLogin } from '../Context/context';
-import { useEffect } from 'react';
-import { getCookie } from '../function';
 
 export function Login() {
   const [isLogin, setIsLogin] = useLogin();

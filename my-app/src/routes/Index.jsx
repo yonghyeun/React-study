@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../Context/context';
-import { getCookie } from '../function';
+import { getCookie, removeCookie } from '../function';
 
 export default function Index() {
   const navigate = useNavigate();
@@ -15,6 +15,15 @@ export default function Index() {
         <br />
         <p>현재 쿠키</p>
         <p>{document.cookie}</p>
+        <button
+          onClick={() => {
+            removeCookie('userId');
+            removeCookie('password');
+            setIsLogin(false);
+          }}
+        >
+          로그아웃 하기
+        </button>
       </section>
     );
   }
