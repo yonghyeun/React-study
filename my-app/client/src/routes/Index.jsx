@@ -25,8 +25,6 @@ export default function Index() {
         <h1>로그인 상태일 때 뜨는 인덱스 페이지</h1>
         <h1>반갑습니다 {userId} 님</h1>
         <br />
-        <p>현재 쿠키</p>
-        <p>{document.cookie}</p>
         <button onClick={handleLogout}>로그아웃 하기</button>
       </section>
     );
