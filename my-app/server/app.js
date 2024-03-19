@@ -2,9 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const findUser = require('./utils/findUser');
+const fileStore = require('session-file-store')(session);
+
 const app = express();
 const PORT = 8888;
-const findUser = require('./utils/findUser');
 
 require('dotenv').config();
 
@@ -20,11 +22,12 @@ app.use(
     saveUninitialized: true, // 세션에 저장할 내역이 없더라도 처음부터 세션을 생성할지 설정
     cookie: {
       // 세션 정보를 주고 받을 쿠키 정보 설정
-      httpOnly: false,
+      httpOnly: true,
       secure: false,
       maxAge: 60000,
     },
-    name: 'seesion-cookie',
+    name: 'session-cookie', // 브라우저 메모리에 sessionId 를 저장할 프로퍼티 명
+    store: new fileStore(), // 세션 객체에 세션 스토어 적용
   }),
 );
 app.listen(PORT, () => {
@@ -40,12 +43,16 @@ app.get('/', (req, res) => {
   res.status(200).send('hi');
 });
 
-// TODO app.post (/login)
-
 app.post('/login', (req, res) => {
   const requestId = req.body.userId || req.params.userId;
   const requestPassword = req.body.password || req.paarams.password;
-  const userFinded = findUser(requestId, requestPassword);
+  const userFinded = findUser(requestId, requestPassword); // Form 데이터로 로그인 정보를 확인
+
+  if (req.session.user) {
+    res.status(200).send(JSON.stringify(userFinded));
+    return;
+  }
+
   if (userFinded) {
     console.log(`로그인 전 세션 아이디 : ${req.sessionID}`);
     req.session.regenerate((err) => {
@@ -61,8 +68,6 @@ app.post('/login', (req, res) => {
   }
 });
 
-// TODO app.get('/content/:contentId)
-
 app.get('/content/:contentId', (req, res) => {
   console.log(req);
   const { params } = req;
@@ -74,8 +79,6 @@ app.get('/content/:contentId', (req, res) => {
     }),
   );
 });
-
-// TODO app.post('/logout')
 
 app.post('/logout', (req, res) => {
   req.session.destroy((err) => {
