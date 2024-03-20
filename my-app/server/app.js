@@ -1,37 +1,19 @@
+/* JWT 사용법 버전  */
+
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
 const findUser = require('./utils/findUser');
-const fileStore = require('session-file-store')(session);
-const path = require('path');
-const absolutePath =
-  'C:/Users/ttddc/OneDrive/바탕 화면/github/React-study/my-app/client/build';
+const jwt = require('jsonwebtoken');
 const app = express();
 const PORT = 8888;
-
-require('dotenv').config();
+const { createAccessToken, verifyToken } = require('./utils/JasonWebToken');
+const db = require('./db');
 
 // 기본 설정
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
-app.use(
-  session({
-    secure: false, // session 을 주고 받을 환경에 대한 설정
-    secret: process.env.SECRET_KEY,
-    resave: false, // 세션을 언제나 저장할지
-    saveUninitialized: true, // 세션에 저장할 내역이 없더라도 처음부터 세션을 생성할지 설정
-    cookie: {
-      // 세션 정보를 주고 받을 쿠키 정보 설정
-      httpOnly: true,
-      secure: false,
-      maxAge: 60000,
-    },
-    name: 'session-cookie', // 브라우저 메모리에 sessionId 를 저장할 프로퍼티 명
-    store: new fileStore(), // 세션 객체에 세션 스토어 적용
-  }),
-);
 
 app.listen(PORT, () => {
   console.log(`Server is running on localhost:${PORT}`);
@@ -46,31 +28,6 @@ app.get('/', (req, res) => {
   res.status(200).send(JSON.stringify('hi~!'));
 });
 
-app.post('/login', (req, res) => {
-  const requestId = req.body.userId || req.params.userId;
-  const requestPassword = req.body.password || req.paarams.password;
-  const userFinded = findUser(requestId, requestPassword); // Form 데이터로 로그인 정보를 확인
-
-  if (req.session.user) {
-    res.status(200).send(JSON.stringify(userFinded));
-    return;
-  }
-
-  if (userFinded) {
-    console.log(`로그인 전 세션 아이디 : ${req.sessionID}`);
-    req.session.regenerate((err) => {
-      if (err) {
-        return res.status(500).send({ message: 'Session regenerate failed' });
-      }
-      req.session.user = userFinded;
-      res.status(200).send(JSON.stringify(userFinded));
-      console.log(`로그인 후 세션 아이디 :${req.sessionID}`);
-    });
-  } else {
-    res.status(400).send({ message: '아이디나 비밀번호를 다시 확인하세요' });
-  }
-});
-
 app.get('/content/:contentId', (req, res) => {
   const { params } = req;
 
@@ -82,12 +39,45 @@ app.get('/content/:contentId', (req, res) => {
   );
 });
 
-app.post('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) throw err;
+app.post('/login', (req, res) => {
+  try {
+    const user = findUser(req);
+    const AccessToken = createAccessToken(user);
+    res.cookie('accessToken', AccessToken, {
+      httpOnly: true,
+      secure: false,
+    });
+    res.status(200).json({ userId: user.userId });
+  } catch (e) {
+    res.status(401).json({ message: e.message });
+  }
+});
 
-    res.clearCookie('session-cookie');
-    res.status(200).send({ message: '로그아웃 잘됐음' });
-    console.log(`----- ${req.sessionID} 로그아웃 -----`);
-  });
+app.post('/logout', (req, res) => {
+  res.clearCookie('accessToken');
+  res.status(200).send('쿠키 삭제 완료~! ');
+});
+
+app.get('/Mypage', (req, res) => {
+  try {
+    const token = req.cookies.accessToken;
+    const verifyResult = verifyToken(token); // token 유효성 검증
+    const userInfo = db.find(
+      // 유효성 검증 후 DB 조회
+      (user) => user.userId === verifyResult.payload.userId,
+    );
+    res.status(200).json(userInfo);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+});
+
+app.get('/login/token', (req, res) => {
+  try {
+    const token = req.cookies.accessToken;
+    const verifyResult = verifyToken(token);
+    res.status(200).json({ userId: verifyResult.payload.userId });
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
 });
