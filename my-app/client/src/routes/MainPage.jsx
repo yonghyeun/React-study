@@ -11,28 +11,15 @@ export default function Main() {
 
   useEffect(() => {
     // 새로고침 시 쿠키에 토큰이 존재한다면 자동으로 로그인을 시도하는 useEffect
-    // TODO 더러운 코드 고치기, try , catch 문을 꼭 써야 할까 ? 그냥
 
     const checkGotToken = async () => {
-      try {
-        const res = await fetch('/login/token', { method: 'GET' });
-        if (!res.ok) {
-          throw Error({
-            message: '기존의 토큰이 없어 자동 로그인은 시도하지 않습니다',
-          });
-        }
-        const body = await res.json();
-        if (body) {
-          setIsLogin(true);
-          setUserInfo((userInfo) => {
-            return { ...userInfo, userId: body.userId };
-          });
-        }
-      } catch (e) {
-        setIsLogin(false);
-        setUserInfo({});
-      }
+      const res = await fetch('/login/token', { method: 'GET' });
+      if (!res.ok) return; // 만약 상태코드가 200~299 이하면 빠르게 종료
+      const body = await res.json();
+      setIsLogin(true);
+      setUserInfo((userInfo) => ({ ...userInfo, userId: body.userId }));
     };
+
     checkGotToken();
   }, []);
 
