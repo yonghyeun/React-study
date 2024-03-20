@@ -4,7 +4,9 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const findUser = require('./utils/findUser');
 const fileStore = require('session-file-store')(session);
-
+const path = require('path');
+const absolutePath =
+  'C:/Users/ttddc/OneDrive/바탕 화면/github/React-study/my-app/client/build';
 const app = express();
 const PORT = 8888;
 
@@ -30,6 +32,7 @@ app.use(
     store: new fileStore(), // 세션 객체에 세션 스토어 적용
   }),
 );
+
 app.listen(PORT, () => {
   console.log(`Server is running on localhost:${PORT}`);
 });
@@ -40,7 +43,7 @@ app.get('/', (req, res) => {
 
   console.log(`${req.session.num} 번째 방문`);
 
-  res.status(200).send('hi');
+  res.status(200).send(JSON.stringify('hi~!'));
 });
 
 app.post('/login', (req, res) => {
@@ -69,7 +72,6 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/content/:contentId', (req, res) => {
-  console.log(req);
   const { params } = req;
 
   res.status(200).send(
