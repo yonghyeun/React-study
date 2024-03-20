@@ -2,21 +2,36 @@ import SideBar from '../Components/Sidebar';
 import Toolbar from '../Components/Toolbar';
 import { Outlet } from 'react-router-dom';
 import '../App.css';
-import { useLogin } from '../Context/context';
+import { useLogin, useUserInfo } from '../Context/context';
 import { useEffect } from 'react';
 
 export default function Main() {
-  const [isLogin, setIsLogin] = useLogin();
+  const [, setIsLogin] = useLogin();
+  const [, setUserInfo] = useUserInfo();
 
-  const fetching = async () => {
-    const res = await fetch('/', { method: 'GET' });
-    const json = await res.json();
-
-    return await json;
-  };
-
-  const json = fetching();
-  console.log(json);
+  useEffect(() => {
+    const checkGotToken = async () => {
+      try {
+        const res = await fetch('/login/token', { method: 'GET' });
+        if (!res.ok) {
+          throw Error({
+            message: '기존의 토큰이 없어 자동 로그인은 시도하지 않습니다',
+          });
+        }
+        const body = await res.json();
+        if (body) {
+          setIsLogin(true);
+          setUserInfo((userInfo) => {
+            return { ...userInfo, userId: body.userId };
+          });
+        }
+      } catch (e) {
+        setIsLogin(false);
+        setUserInfo({});
+      }
+    };
+    checkGotToken();
+  }, []);
 
   return (
     <section style={{ display: 'flex' }}>

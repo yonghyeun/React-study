@@ -11,7 +11,7 @@ export default function Index() {
       const res = await fetch('/logout', { method: 'POST' });
       if (res.ok) {
         setIsLogin(false);
-        setUserInfo(null);
+        setUserInfo({});
       } else {
         alert(res.message);
       }

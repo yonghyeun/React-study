@@ -1,18 +1,9 @@
-import { useLogin, useUserInfo } from '../Context/context';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useLoaderData } from 'react-router-dom';
 
 export function Mypage() {
-  const [isLogin, setIsLogin] = useLogin();
-  const [userInfo, setUserInfo] = useUserInfo();
+  const userInfo = useLoaderData();
+
   const { firstName, lastName, gender, age, avatar } = userInfo;
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isLogin) navigate('/Login');
-  }, [isLogin, navigate]);
-
-  if (!userInfo) return null;
 
   return (
     <section>
@@ -31,4 +22,10 @@ export function Mypage() {
       </p>
     </section>
   );
+}
+
+export async function loader() {
+  const res = await fetch('/MyPage', { method: 'GET' });
+  const body = await res.json();
+  return body;
 }

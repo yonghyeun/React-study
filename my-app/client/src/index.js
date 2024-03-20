@@ -30,9 +30,9 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: 'MyPage/:userId',
+        path: 'MyPage',
         element: <Mypage />,
-        // loader: myPageLoader,
+        loader: myPageLoader,
         errorElement: <ErrorPage />,
       },
     ],
