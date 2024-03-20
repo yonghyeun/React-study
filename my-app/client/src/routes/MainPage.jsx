@@ -10,6 +10,9 @@ export default function Main() {
   const [, setUserInfo] = useUserInfo();
 
   useEffect(() => {
+    // 새로고침 시 쿠키에 토큰이 존재한다면 자동으로 로그인을 시도하는 useEffect
+    // TODO 더러운 코드 고치기, try , catch 문을 꼭 써야 할까 ? 그냥
+
     const checkGotToken = async () => {
       try {
         const res = await fetch('/login/token', { method: 'GET' });
