@@ -41,12 +41,14 @@ app.get('/content/:contentId', (req, res) => {
 
 app.post('/login', (req, res) => {
   try {
-    const user = findUser(req);
+    const user = findUser(req); // 데이터베이스에서 유저를 찾는
     const AccessToken = createAccessToken(user);
-    res.cookie('accessToken', AccessToken, {
+    const cookieOption = {
       httpOnly: true,
       secure: false,
-    });
+    };
+
+    res.cookie('accessToken', AccessToken, cookieOption);
     res.status(200).json({ userId: user.userId });
   } catch (e) {
     res.status(401).json({ message: e.message });
