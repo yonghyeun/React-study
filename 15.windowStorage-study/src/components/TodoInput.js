@@ -10,11 +10,12 @@ import { setStorageItem } from '../utils/usingStorage';
 export default function TodoInput({ storageName }) {
   const [state, setState] = useDynamicStorage(storageName);
   const inputRef = useRef(null);
+  const idRef = useRef(0);
   const createTime = new Date();
 
   const handleClick = () => {
     const newTodo = {
-      id: createTime.getTime(),
+      id: idRef.current++,
       content: inputRef.current.value,
       createTime: createTime.toDateString(),
     };

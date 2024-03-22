@@ -16,13 +16,9 @@ export const setStorageItem = (storageName, key, value) => {
 };
 
 export const removeStorageItem = (storageName, key) => {
-  console.log(window.localStorage);
-  console.log(key);
   switch (storageName) {
     case 'localStorage':
       window.localStorage.removeItem(key);
-      console.log(window.localStorage);
-
       break;
     case 'sessionStorage':
       window.sessionStorage.removeItem(key);
@@ -32,14 +28,21 @@ export const removeStorageItem = (storageName, key) => {
   }
 };
 
+/**
+ * {...window.localStorage} 처럼 하는 이유는 Storage Object.values(window.localStorage) 로 불러왔을 때엔
+ * 특별한 순서 없이 가져오기 때문에 순서가 보장되지 않는다.
+ * 그렇기에 디스트럭처링을 이용해 key 값을 이용해 순서를 보장시킨 후 가져오도록 한다.
+ * @param {{storageName : String}}
+ * @returns
+ */
 export const getStorageItems = (storageName) => {
   switch (storageName) {
     case 'localStorage':
-      return Object.values(window.localStorage).map((todoString) =>
+      return Object.values({ ...window.localStorage }).map((todoString) =>
         JSON.parse(todoString),
       );
     case 'sessionStorage':
-      return Object.values(window.sessionStorage).map((todoString) =>
+      return Object.values({ ...window.sessionStorage }).map((todoString) =>
         JSON.parse(todoString),
       );
 

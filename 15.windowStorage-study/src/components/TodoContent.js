@@ -10,6 +10,8 @@ export default function TodoContent({ storageName }) {
     removeStorageItem(storageName, idWillRemove);
   }
 
+  console.log(state);
+
   return (
     <ul>
       {state.map((todo) => {

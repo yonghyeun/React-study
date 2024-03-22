@@ -1,6 +1,6 @@
 import { ContextProvider } from '../context/Context';
 import LocalStorageTodo from './localStorageTodo';
-import SessionSotrageTodo from './sessionStorageTodo';
+import SessionStorageTodo from './sessionStorageTodo';
 import '../assets/App.css';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <main>
       <ContextProvider>
         <LocalStorageTodo />
-        <SessionSotrageTodo />
+        <SessionStorageTodo />
       </ContextProvider>
     </main>
   );
