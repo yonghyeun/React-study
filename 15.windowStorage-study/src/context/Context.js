@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-
+import { getStorageItems } from '../utils/usingStorage';
 export const LocalStorageContext = createContext(null);
 export const SessionStorageContext = createContext(null);
 
@@ -9,11 +9,9 @@ export const SessionStorageContext = createContext(null);
  * @returns
  */
 export function ContextProvider({ children }) {
-  const [localTodo, setLocalTodo] = useState(
-    Array.from({ ...window.localStorage }).map((todo) => JSON.parse(todo)),
-  );
+  const [localTodo, setLocalTodo] = useState(getStorageItems('localStorage'));
   const [sessionTodo, setSessionTodo] = useState(
-    Array.from({ ...window.sessionStorage }).map((todo) => JSON.parse(todo)),
+    getStorageItems('sessionStorage'),
   );
 
   return (

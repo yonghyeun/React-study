@@ -15,14 +15,34 @@ export const setStorageItem = (storageName, key, value) => {
   }
 };
 
-export const removeStorageItem = (storageName, key, value) => {
+export const removeStorageItem = (storageName, key) => {
+  console.log(window.localStorage);
+  console.log(key);
   switch (storageName) {
     case 'localStorage':
-      window.localStorage.removeItem(key, value);
+      window.localStorage.removeItem(key);
+      console.log(window.localStorage);
+
       break;
     case 'sessionStorage':
-      window.sessionStorage.removeItem(key, value);
+      window.sessionStorage.removeItem(key);
       break;
+    default:
+      throw Error('localStorage 혹은 sessionStorage 에서 선택해주세요');
+  }
+};
+
+export const getStorageItems = (storageName) => {
+  switch (storageName) {
+    case 'localStorage':
+      return Object.values(window.localStorage).map((todoString) =>
+        JSON.parse(todoString),
+      );
+    case 'sessionStorage':
+      return Object.values(window.sessionStorage).map((todoString) =>
+        JSON.parse(todoString),
+      );
+
     default:
       throw Error('localStorage 혹은 sessionStorage 에서 선택해주세요');
   }
