@@ -30,7 +30,7 @@ export const removeStorageItem = (storageName, key) => {
 
 /**
  * {...window.localStorage} 처럼 하는 이유는 Storage Object.values(window.localStorage) 로 불러왔을 때엔
- * 특별한 순서 없이 가져오기 때문에 순서가 보장되지 않는다.
+ * 특별한 순서 없이 가져오기 때문에 순서가 보장되지 않는다. (Storage 들은 값을 저장 할 때 순서를 보장하지 않는다.)
  * 그렇기에 디스트럭처링을 이용해 key 값을 이용해 순서를 보장시킨 후 가져오도록 한다.
  * @param {{storageName : String}}
  * @returns
@@ -38,12 +38,20 @@ export const removeStorageItem = (storageName, key) => {
 export const getStorageItems = (storageName) => {
   switch (storageName) {
     case 'localStorage':
-      return Object.values({ ...window.localStorage }).map((todoString) =>
-        JSON.parse(todoString),
+      const localStorageItems = Object.values({ ...window.localStorage }).map(
+        (todoString) => JSON.parse(todoString),
       );
+      return localStorageItems.toSorted(
+        (todo, nextTodo) => todo.id - nextTodo.id,
+      );
+
     case 'sessionStorage':
-      return Object.values({ ...window.sessionStorage }).map((todoString) =>
-        JSON.parse(todoString),
+      const sessionStorageItems = Object.values({
+        ...window.sessionStorage,
+      }).map((todoString) => JSON.parse(todoString));
+
+      return sessionStorageItems.toSorted(
+        (todo, nextTodo) => todo.id - nextTodo.id,
       );
 
     default:

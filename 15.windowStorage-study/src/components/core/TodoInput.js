@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import useDynamicStorage from '../hooks/useDynamicStorage';
-import { setStorageItem } from '../utils/usingStorage';
+import useDynamicStorage from '../../hooks/useDynamicStorage';
+import { setStorageItem } from '../../utils/usingStorage';
 
 /**
  * TodoInput 은 param 으로 받은 storageName에 따라 추가되는 todo 값을 webStorage에 저장합니다.
@@ -10,12 +10,11 @@ import { setStorageItem } from '../utils/usingStorage';
 export default function TodoInput({ storageName }) {
   const [state, setState] = useDynamicStorage(storageName);
   const inputRef = useRef(null);
-  const idRef = useRef(0);
   const createTime = new Date();
 
   const handleClick = () => {
     const newTodo = {
-      id: idRef.current++,
+      id: createTime.getTime(),
       content: inputRef.current.value,
       createTime: createTime.toDateString(),
     };

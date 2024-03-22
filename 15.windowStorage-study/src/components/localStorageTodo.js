@@ -1,5 +1,5 @@
-import TodoInput from './TodoInput';
-import TodoContent from './TodoContent';
+import TodoInput from './core/TodoInput';
+import TodoContent from './core/TodoContent';
 
 export default function LocalStorageTodo() {
   return (

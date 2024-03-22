@@ -1,5 +1,7 @@
 * {
   user-select: none;
+  padding: 0px;
+  margin: 0px;
 }
 
 main {
@@ -9,6 +11,7 @@ main {
 }
 
 article {
+  padding-top: 5rem;
   display: flex;
   width: 100%;
   height: 100vh;
@@ -18,6 +21,7 @@ article {
 
 ul {
   padding: 2rem;
+  list-style: disc;
 }
 
 b,
@@ -38,4 +42,11 @@ button {
   padding: 1rem;
   margin-right: 5px;
   border-radius: 1rem;
+}
+
+li {
+  padding: 10px;
+  border: 5px solid white;
+  border-radius: 30px;
+  margin-bottom: 10px;
 }

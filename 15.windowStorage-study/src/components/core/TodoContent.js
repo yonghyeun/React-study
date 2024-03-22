@@ -1,5 +1,5 @@
-import useDynamicStorage from '../hooks/useDynamicStorage';
-import { removeStorageItem } from '../utils/usingStorage';
+import useDynamicStorage from '../../hooks/useDynamicStorage';
+import { removeStorageItem } from '../../utils/usingStorage';
 
 export default function TodoContent({ storageName }) {
   const [state, setState] = useDynamicStorage(storageName);
@@ -9,8 +9,6 @@ export default function TodoContent({ storageName }) {
     setState(state.filter(({ id }) => id !== Number(idWillRemove)));
     removeStorageItem(storageName, idWillRemove);
   }
-
-  console.log(state);
 
   return (
     <ul>
