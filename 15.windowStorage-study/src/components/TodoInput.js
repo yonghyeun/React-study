@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import useDynamicStorage from '../hooks/useDynamicStorage';
 import { setStorageItem } from '../utils/usingStorage';
 
@@ -8,23 +8,23 @@ import { setStorageItem } from '../utils/usingStorage';
  * @returns {JSX.Element}
  */
 export default function TodoInput({ storageName }) {
+  // TODO useRef 사용하기
   const [state, setState] = useDynamicStorage(storageName);
-  const [text, setText] = useState('');
-
-  const handleChange = (e) => {
-    setText(e.target.value);
-  };
-
+  const inputRef = useRef(null);
   const handleClick = () => {
     const id = Math.floor(Math.random() * 1000000);
-    const newTodo = { id, text, createTime: new Date() };
+    const newTodo = {
+      id,
+      content: inputRef.current.value,
+      createTime: new Date(),
+    };
     setState([...state, newTodo]); // state 설정
     setStorageItem(storageName, id, newTodo); // storage 설정
   };
 
   return (
     <div>
-      <input type='text' onChange={handleChange} />
+      <input type='text' ref={inputRef} />
       <button onClick={handleClick}>Set Todo</button>
     </div>
   );
