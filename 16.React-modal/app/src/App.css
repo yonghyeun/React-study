@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'yuju';
+  src: url('./assets/YeojuCeramic\ TTF.ttf') format('truetype');
+}
+
+* {
+  font-family: 'yuju';
+}

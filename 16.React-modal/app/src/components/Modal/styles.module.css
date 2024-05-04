@@ -1,0 +1,54 @@
+form {
+  border: 1px solid black;
+  padding: 16px;
+  width: 400px;
+  height: 500px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  font-size: 40px;
+  position: absolute;
+  left: 600px;
+  top: 200px;
+}
+
+.group {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 16px;
+}
+
+.group label {
+  margin-bottom: 8px;
+}
+
+.submit {
+  padding: 16px;
+}
+
+input {
+  padding: 16px;
+  width: 300px;
+}
+
+.buttonWrapper {
+  width: 300px;
+  margin-top: 36px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.modalWrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: transparent;
+  backdrop-filter: blur(10px);
+}

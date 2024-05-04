@@ -1,0 +1,12 @@
+.nav {
+  color: white;
+  font-size: 36px;
+  position: absolute;
+  top: 56px;
+  right: 80px;
+}
+
+li {
+  list-style: none;
+  margin: 10px 0px;
+}
