@@ -1,0 +1,14 @@
+.cancleModal {
+  background-color: lightgrey;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  padding: 10px;
+  font-size: 16px;
+  margin-right: 16px;
+  margin-top: 16px;
+}

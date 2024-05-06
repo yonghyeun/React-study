@@ -1,9 +1,13 @@
 import style from './styles.module.css';
 
-import useModal from '../../Context/useModal';
+import SignupModalWrapper from '../SignupModalWrapper/SignupModalWrapper';
 
-const Modal: React.FC = () => {
-  const [_, setIsOpen] = useModal();
+import useModal from '../../Context/useModal';
+import useCancleModal from '../../Context/useCancleModa';
+
+const SignUpModal: React.FC = () => {
+  const [isOpen, setIsOpen] = useModal();
+  const [isCancle, setIsCancle] = useCancleModal();
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -13,7 +17,7 @@ const Modal: React.FC = () => {
 
   const handleCancle = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setIsOpen(false);
+    setIsCancle(true);
   };
 
   const stopPropoation = (e: React.MouseEvent<HTMLFormElement>) => {
@@ -22,6 +26,7 @@ const Modal: React.FC = () => {
 
   return (
     <form action='/' onClick={stopPropoation}>
+      <SignupModalWrapper />
       <div className={style.group}>
         <input
           type='text'
@@ -50,4 +55,4 @@ const Modal: React.FC = () => {
   );
 };
 
-export default Modal;
+export default SignUpModal;

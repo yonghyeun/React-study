@@ -11,6 +11,7 @@ form {
   background-color: white;
   border-radius: 20px;
   font-size: 40px;
+  position: relative;
 }
 
 .group {

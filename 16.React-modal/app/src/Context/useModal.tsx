@@ -1,6 +1,6 @@
 import { useContext, Dispatch, SetStateAction } from 'react';
 
-import ModalContext from './Context';
+import { ModalContext } from './Context';
 
 type ModalContextType = [boolean, Dispatch<SetStateAction<boolean>>];
 

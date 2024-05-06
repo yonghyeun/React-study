@@ -1,7 +1,6 @@
 import useModal from '../../Context/useModal';
 
-import Modal from '../Modal/Modal';
-
+import SignUpModal from '../SignupModal/SignupModal';
 import style from './style.module.css';
 
 const visibleStyle = {
@@ -26,7 +25,7 @@ const GlobalModalWrapper: React.FC = () => {
       style={isOpen ? { ...visibleStyle } : { ...inVisibleStyle }}
       onClick={handleClickWrapper}
     >
-      {isOpen && <Modal />}
+      {isOpen && <SignUpModal />}
     </section>
   );
 };
