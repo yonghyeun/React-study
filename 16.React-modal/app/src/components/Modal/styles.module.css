@@ -11,9 +11,6 @@ form {
   background-color: white;
   border-radius: 20px;
   font-size: 40px;
-  position: absolute;
-  left: 600px;
-  top: 200px;
 }
 
 .group {
@@ -49,6 +46,9 @@ input {
   position: fixed;
   top: 0px;
   left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: transparent;
   backdrop-filter: blur(10px);
 }

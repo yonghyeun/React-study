@@ -3,4 +3,5 @@
   height: 100vh;
   background: url('../../assets/background.jpg');
   background-size: cover;
+  position: relative;
 }

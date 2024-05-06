@@ -2,10 +2,9 @@ import style from './styles.module.css';
 
 import TextWrapper from '../TextWrapper/TextWrapper';
 import SignIn from '../SignIn/SignIn';
-import Modal from '../Modal/Modal';
-import { useState } from 'react';
+import useModal from '../../Context/useModal';
 const Content: React.FC = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [_, setIsOpen] = useModal();
 
   return (
     <main className={style.content}>
@@ -14,7 +13,6 @@ const Content: React.FC = () => {
         <TextWrapper.Text />
       </span>
       <SignIn setIsOpen={setIsOpen} />
-      {isOpen && <Modal setIsOpen={setIsOpen} />}
     </main>
   );
 };
