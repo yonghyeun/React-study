@@ -320,3 +320,21 @@ export default SignUpModal;
 이후 취소버튼을 누르면 해당 모달창이 뜨며 해당 모달창을 통해
 
 `SignUpModal` 을 포함하여 모두 제거해버릴 수도 , `CancleModal` 만 제거 할 수도 있게 되었다.
+
+## 예시를 만들며 생각한 문제점 파악하기
+
+### 기능 작동상의 오류
+
+코드의 효율이 어떻니 마니를 생각하기 이전 , 기능상에 문제가 있음을 알 수 있다.
+
+![alt text](<problem 1.gif>)
+
+다음처럼 `SignUpModal` 이 생성되고 그 위에 `CancleModal` 이 렌더링 되었을 때
+
+`SignUpModal` 외부 영역을 클릭하게 되면 `GlobalModalWrapper` 의 이벤트 핸들러로 인해
+
+`SignUpModal` 렌더링에 관여하는 `isOpen` 이 `false` 로 변경되어 `Virtual DOM` 에서 `SignUpModal` 이 `unmount` 되게 된다.
+
+문제는 `Unmount` 되는 시점에서 `isCancle` 의 `state` 가 변경되지 않은 상태로 `unmount` 되기 때문에
+
+다시 마운트 될 때에는 `isCancle` 이 열린 상태로 모달이 열리게 된다.
