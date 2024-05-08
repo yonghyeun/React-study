@@ -1,45 +1,23 @@
-import { useNavigate } from 'react-router-dom';
-import { useLogin, useUserInfo } from '../Context/context';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 export default function Index() {
-  const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useLogin();
-  const [userInfo, setUserInfo] = useUserInfo();
+  const [num, setNum] = useState(0);
+  const [name, setName] = useState('동동');
 
-  const handleLogout = async () => {
-    try {
-      const res = await fetch('/logout', { method: 'POST' });
-      if (res.ok) {
-        setIsLogin(false);
-        setUserInfo({});
-      } else {
-        alert(res.message);
-      }
-    } catch (e) {}
+  const increase = () => {
+    setNum(num + 1);
   };
 
-  if (isLogin) {
-    const userId = userInfo.userId;
-    return (
-      <section>
-        <h1>로그인 상태일 때 뜨는 인덱스 페이지</h1>
-        <h1>반갑습니다 {userId} 님</h1>
-        <br />
-        <button onClick={handleLogout}>로그아웃 하기</button>
-      </section>
-    );
-  }
+  useEffect(() => {
+    console.log(`useEffect 실행 ! ${name} , ${num}`);
+  }, [name]);
 
   return (
-    <section>
-      <h1>로그아웃 상태일 때 뜨는 인덱스 페이지</h1>
-      <button
-        onClick={() => {
-          navigate('login');
-        }}
-      >
-        로그인 하기
-      </button>
-    </section>
+    <div>
+      <h1>내 이름은 {name}</h1>
+      <h1>버튼이 눌린 횟수는 {num}</h1>
+      <button onClick={increase}>click me !</button>
+    </div>
   );
 }

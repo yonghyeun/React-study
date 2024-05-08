@@ -17,11 +17,7 @@ export default function TodoContent({ storageName }) {
           <li key={todo.id}>
             <b>{todo.content}</b>
             <i>{todo.createTime}</i>
-            <button
-              data-id={todo.id}
-              data-content={todo.content}
-              onClick={handleDelete}
-            >
+            <button data-id={todo.id} onClick={handleDelete}>
               Delete
             </button>
           </li>
