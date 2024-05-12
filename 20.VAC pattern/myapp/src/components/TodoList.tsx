@@ -11,8 +11,8 @@ type Props = {
 const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
   return (
     <ul style={{ ...style.TodoList }}>
-      {todos.map((todo) => (
-        <Todo todo={todo} setTodos={setTodos} />
+      {todos.map((todo, index) => (
+        <Todo todo={todo} setTodos={setTodos} key={index} />
       ))}
     </ul>
   );
