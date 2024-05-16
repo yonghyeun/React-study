@@ -13,9 +13,7 @@
 
 `VAC` 는 `View Asset Component` 의 줄임말로
 
-철저하게 `stateless` 하게 지어져 `props` 만으로 데이터를 렌더링 하는 역할만을 하는
-
-컴포넌트를 의미한다.
+**철저하게 `stateless` 하게 지어져 `props` 만으로 데이터를 렌더링 하는 역할만을 하는 컴포넌트를 의미한다.**
 
 <img src = 'https://wit.nts-corp.com/wp-content/uploads/2021/08/vac_pattern_s1.png'>
 
@@ -221,7 +219,7 @@ export default style;
 
 ![alt text](image.png)
 
-### 기존 패턴의 문제점 찾기
+# 기존 패턴의 문제점 찾기
 
 ---
 
@@ -271,3 +269,81 @@ export default RemoveButton;
 이 경우 두 개발자의 커밋이 충돌하여 문제가 발생할 수 있다.
 
 이런 이유는 해당 컴포넌트를 관리하는 주체가 `UI , FE` 개발자 두 명이 함께 존재하기 때문이다.
+
+# `VAC` 패턴으로 리팩토링 하기
+
+`UI` 개발자와 `FE` 개발자가 해당 문제를 해결하기 위해 머리를 싸매고 토론하여 나온 결론은 다음과 같다.
+
+- **`CSS in JS` 를 하기 위해 스타일드 컴포넌트를 구성하자**
+- **컴포넌트 내부에서 비즈니스 로직과 스타일 로직을 구분하자**
+
+그럼 스타일드 컴포넌트를 이용해 `VAC` 패턴을 적용해보자
+
+#### `RemoveButton` 리팩토링
+
+모든 컴포넌트를 리팩토링 하면 너무 글이 길어질 것 같아 한 컴포넌트만 대상으로 하여 리팩토링 해보자
+
+```tsx
+import { TodoType } from './Todo';
+import styled from 'styled-components';
+
+type Props = {
+  id: number;
+  setTodos: (updateFn: (prev: TodoType[]) => TodoType[]) => void;
+};
+
+/*
+VAC 컴포넌트 생성
+해당 VAC 컴포넌트는 단순히 props 들만 전달받아 
+렌더링만 하도록 한다
+UI 개발자가 책임을 맡는다.
+*/
+const RemoveButtonView = styled.button`
+  padding: '5px';
+  ...
+`;
+
+const RemoveButton: React.FC<Props> = ({ id, setTodos }) => {
+  /*비즈니스 로직 처리
+  FE 개발자가 책임을 맡는다.
+  */
+  const handleClick = () => {
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  };
+
+  /*렌더링 로직은 VAC 에게 전달*/
+  return <RemoveButtonView onClick={handleClick}>Remove</RemoveButtonView>;
+};
+
+export default RemoveButton;
+```
+
+기존 `RemoveButton` 컴포넌트에서 변경된 점은 `RemoveButton` 컴포넌트가 `RemoveButtonView` 컴포넌트를 반환한다는 점이다.
+
+이는 한 컴포넌트를 비즈니스 로직만을 다루는`RemoveButton` 컴포넌트와 `View` 로직을 다루는 `RemovebuttonView` 컴포넌트인 두 가지로 나눴다는 것이다.
+
+만약 `View` 로직에 수정이 있게 되면 `UI` 개발자는 단순히 `RemoveButtonView` 만 신경쓰면 된다.
+
+또, 만약 `FE` 로직에 수정이 있게 된다면 `FE` 개발자는 `RemoveButton` 만 신경쓰면 된다.
+
+`VAC` 를 적용 할 때 가장 중요한 점은 다음과 같다.
+
+- 내부에서 `state` 를 가지지 않으며 `state` 를 `props` 를 받아 해당 `state` 를 렌더링 하는 것은 가능하다. 즉 `VAC` 는 `stateless` 컴포넌트이다.
+- 이벤트 핸들러를 `props` 로 받은 후 특별한 처리 없이 장착만 하도록 해야 한다.
+- 여러 자식 컴포넌트를 갖는 것은 가능하다. 자식 컴포넌트는 `VAC` 든 `VAC` 가 아니든 상관없이 모두 가질 수 있다.
+
+결국 `stateless` 하며 비즈니스 로직이 존재하지 않는 모든 컴포넌트는 `VAC` 가 될 수 있다.
+
+> 꼭 스타일드 컴포넌트를 사용 할 필요 없다. 어떤 방식으로 하든 렌더링 로직만 존재한다면 해당 컴포넌트를 `VAC` 로 볼 수 있다.
+
+# 회고
+
+---
+
+꼭 `VAC` 패턴이 뭔지 단어는 몰랐어도 알게 모르게 자주 쓰고 있었다.
+
+그래도 이름을 알게 돼서 좋긴 했고 , 문제가 발생 할 수 있다는 점을 알게 되었다.
+
+하 ~ 예시가 조금 아쉽다.
+
+나중에 프로젝트 하면서 꼭 `VAC` 패턴을 적용해보고 글을 다시 쓰드록 해야겟다.

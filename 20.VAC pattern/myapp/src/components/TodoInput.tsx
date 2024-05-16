@@ -13,6 +13,7 @@ type TextChangeHandler = (event: ChangeEvent<HTMLInputElement>) => void;
 type TodosAddHandler = () => void;
 
 const TodoInput: React.FC<Props> = ({ text, todos, setText, setTodos }) => {
+
   const handleChange: TextChangeHandler = (e) => setText(e.target.value);
 
   const handleClick: TodosAddHandler = () => {

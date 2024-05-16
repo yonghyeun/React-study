@@ -17,7 +17,7 @@ const RemoveButtonView = styled.button`
 
 const RemoveButton: React.FC<Props> = ({ id, setTodos }) => {
   /*비즈니스 로직 처리*/
-  const handleClick = () => {
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
   };
 
