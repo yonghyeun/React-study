@@ -4,7 +4,12 @@ import { useState } from 'react';
 import { ProgressBarProps } from 'types';
 const AsyncAddButton: React.FC = () => {
   const [isGoing, setIsGoing] = useState<ProgressBarProps['$isGoing']>(false);
-  const handleClick = () => setIsGoing(true);
+  const handleClick = () => {
+    setIsGoing(false);
+    setTimeout(() => {
+      setIsGoing(true);
+    }, 0);
+  };
 
   return (
     <Button onClick={handleClick}>

@@ -1,6 +1,7 @@
 declare module '*.svg' {
-  import React, { PropsWithoutRef } from 'react';
-  const ReactComponent: React.FunctionComponent<PropsWithoutRef<SVGSVGElement>>;
+  const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement>
+  > & { title?: string };
   export { ReactComponent };
   const src: string;
   export default src;

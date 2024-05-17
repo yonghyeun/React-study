@@ -6,7 +6,7 @@ const CountView = styled.h1`
 
 const Count = () => {
   // TODO 상태 받아 렌더링 하기
-  const num = 30;
+  const num = 0;
   return <CountView>{num}</CountView>;
 };
 

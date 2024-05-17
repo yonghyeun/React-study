@@ -21,9 +21,10 @@ const ProgressBarView = styled.section<ProgressBarProps>`
   animation: ${(props) =>
     props.$isGoing
       ? css`
-          ${fillProgressBar} 2s infinite
+          ${fillProgressBar} 2s ease-out;
         `
       : 'none'};
+  transition: width 2s ease-out;
 `;
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ $isGoing }) => {
