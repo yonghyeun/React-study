@@ -270,21 +270,47 @@ export const { increament, decreament, increamentByAmount } =
 
 `RTK` 에서 제공하는 `createSlice` 메소드는 `SliceOptions` 객체 하나만으로 충분합니다.
 
+이렇게 `createSlice` 로 생성된 `Slice` 객체는 다음과 같이 생겼습니다.
+`export const counterSlice = createSlice(SliceOptions)` 를 통해 생성된 `counterSlice` 객체는 다음과 같이 생겼습니다.
+
+```tsx
+/ * 생성된 Slice 객체 예시 */
+{
+  name: 'counter',
+  initialState: { value: 0 },
+  reducers: {
+    increment: (state) => { state.value += 1; },
+    decrement: (state) => { state.value -= 1; },
+    incrementByAmount: (state, action) => { state.value += action.payload; },
+  },
+  actions: {
+    increment: () => ({ type: 'counter/increment' }),
+    decrement: () => ({ type: 'counter/decrement' }),
+    incrementByAmount: (amount) => ({ type: 'counter/incrementByAmount', payload: amount }),
+  },
+  caseReducers: {
+    increment: (state) => { state.value += 1; },
+    decrement: (state) => { state.value -= 1; },
+    incrementByAmount: (state, action) => { state.value += action.payload; },
+  },
+  reducer: (state, action) => { /* reducer logic */ }
+  ...
+}
+```
+
 `RTK` 와 `Redux` 의 `Reducer` 생성 방식의 가장 큰 차이점은 다음 두 가지일것입니다.
 
 **1. `Action Type , Action Creator` 함수를 만들지 않아도 됩니다.**
-**2. `state` 를 `mutable` 하게 변경 하듯 사용 할 수 있습니다.**
+**2. `Action Type` 별 `Reducer` 의 행동을 정의 할 필요 없습니다.**
+**3. `state` 를 `mutable` 하게 변경 하듯 사용 할 수 있습니다.**
 
-`SliceOptions` 객체의 각 프로퍼티들을 살펴보겠습니다.
+`RTK` 에서는 `name , reducers` 메소드의 이름을 이용해 액션 크리에이터 메소드를 생성합니다.
 
-- `name` : `createSlice` 로 생성될 리듀서의 이름을 가리킵니다. 해당 값은 생성 될 액션 객체의 타입 값을 `/` 기준 좌측에 할당됩니다. (예 : `type : counter/@@@`)
-- `initalState` : `Redux` 때와 동일합니다.
-- `reducer` : 생성 할 `Reducer` 의 로직들을 담은 객체이며 내부에는 `(state: , action?) => any` 형태로 선언된 메소드들을 담고 있습니다.
-  메소드 명은 생성될 액션 객체의 타입 값 `/` 기준 우측에 할당됩니다. (예 : `type : @@@/increament`)
+생성되는 액션 타입들은 `reducers` 의 메소드 이름을 사용하기 때문에 이제 앞으로 `reducer` 들이 `Action type` 별 분기문을 작성해줄 필요 없습니다. (`Redux` 에선 `switch case` 문을 사용했던 것을 기억해보세요)
 
-`RTK` 에서는 `name , reducers` 를 이용해 액션 객체를 생성하는 로직을 단순화 하였습니다.
+**그저 단순하게 상태 변경 메소드들만 생성해두면 `RTK` 가 알아서 액션 크리에이터 , 분기 처리 모두 해줍니다.**
 
-또 특징적인 것으로 `reducers` 내부의 함수는 `mutable` 하게 `state` 를 변경합니다.
+또 특징적인 것으로 `reducers` 내부의 함수는 `mutable` 하게 `state` 를 변경하는 것 처럼 보입니다.
 
 그럼 `RTK` 는 `state` 를 `mutable` 하게 관리하는 걸까요 ?
 
