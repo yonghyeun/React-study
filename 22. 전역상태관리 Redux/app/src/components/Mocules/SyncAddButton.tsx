@@ -1,9 +1,17 @@
 import Button from 'components/Atoms/Button';
+import store from 'store/store';
+import { incrementByAmount } from 'store/CounterSlice';
+
+import { useDispatch } from 'react-redux';
 
 const SyncAddButton = () => {
-  // TODO state 로 amount 받기
+  const dispatch = useDispatch();
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+    const { amount } = store.getState();
+    dispatch(incrementByAmount(amount));
+  };
 
-  return <Button>Add Sync</Button>;
+  return <Button onClick={handleClick}>Add Sync</Button>;
 };
 
 export default SyncAddButton;

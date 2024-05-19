@@ -1,11 +1,31 @@
 import Button from '../Atoms/Button';
 
+import { increment, decrement } from 'store/CounterSlice';
+import { useDispatch } from 'react-redux';
+
 export const AddButton = () => {
-  // TODO onClick method 추가 하기
-  return <Button width={'200'}>+</Button>;
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(increment());
+  };
+
+  return (
+    <Button width={'200'} onClick={handleClick}>
+      +
+    </Button>
+  );
 };
 
 export const SubtractButton = () => {
-  // TODO onClick method 추가하기
-  return <Button width={'200'}>-</Button>;
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    dispatch(decrement());
+  };
+
+  return (
+    <Button width={'200'} onClick={handleClick}>
+      -
+    </Button>
+  );
 };

@@ -1,10 +1,18 @@
 import Input from 'components/Atoms/Input';
 
-const InputCharCounter = () => {
-  // TODO state 에서 받아와 defaultValue 로 설정하기
-  const increaseNum = 2;
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'store/store';
+import { changeAmount } from 'store/CounterSlice';
 
-  return <Input defaultValue={increaseNum} />;
+const InputCharCounter = () => {
+  const dispatch = useDispatch();
+
+  const increseAmount = useSelector((state: RootState) => state.amount);
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    dispatch(changeAmount(Number(e.target.value)) || 0);
+  };
+
+  return <Input defaultValue={increseAmount} onChange={handleChange} />;
 };
 
 export default InputCharCounter;

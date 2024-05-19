@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+
 const CountView = styled.h1`
   font-size: 36px;
 `;
 
 const Count = () => {
-  // TODO 상태 받아 렌더링 하기
-  const num = 0;
+  const num = useSelector((state: RootState) => state.counter.value);
+
   return <CountView>{num}</CountView>;
 };
 
